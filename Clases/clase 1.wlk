@@ -1,33 +1,35 @@
-/*### Primera parte: qué te puedo cobrar
+// CLASE 1
 
-- La materia la representamos como un String
-- **nico**: te cobra 50 pesos por cada letra de la materia que da.
+/* --- Primera parte: qué te puedo cobrar
+
+La materia la representamos como un String
+- Nico: te cobra 50 pesos por cada letra de la materia que da.
   Ejemplos: por "historia" te cobra 8 * 50 = 400
   por "matemáticas" te cobra 11 * 50 = 550
   
-- **carlono**
+- Carlono
   cobra una cantidad variable (por ahora es 300, se ajusta por inflación)
 
-- **camila**
+- Camila
   - si está de buen humor, te cobra 250 
   - si no, te cobra 700
 
   es de humor variable
 
-- **lucas**, es un alumno
+- Lucas, es un alumno
   - tiene plata ($ 400) y tiene un profe preferido, que puede cambiar.
   - está feliz si su profe preferido le puede dar clases particulares de geografía
   - nico le cobra 450 (9 * 50), carlono le cobra 300, camila 250 ó 700.
   
 
-  ### Segunda parte: me piace
+  ----Segunda parte: 
 
 - Sabemos las materias que estudia Lucas: [ "historia", "matematicas", "fisica" ]
 - Queremos saber si un profe le cae bien un alumno
   - A Nico le cae bien los que estudian Física.
   - A Carlono le caen bien todos.
   - A Camila le caen bien los que estudian más de 3 materias.
-- Ahora aparece una alumna nueva: **Melanie**, qué necesitamos que sepa contestar 
+Ahora aparece una alumna nueva: **Melanie**, qué necesitamos que sepa contestar 
   para incorporarla a nuestra solución.
 */
 
@@ -35,25 +37,21 @@
 object nico {
 
   method cuantoCobras(materia) = materia.length() * 50 
-  // tiene un sist de inferencia de tipos donde
-  //detecta va a ser un parametro de tipo string
+  /* tiene un sist de inferencia de tipos donde
+  detecta que va a ser un parametro de tipo string
 
 
+  method leCaeBien(alumno) = alumno.materiasQueEstudia().contains("fisica")
 
-
-  /*method leCaeBien(alumno) = alumno.materiasQueEstudia().contains("fisica")
-
-  esto hace que nico conozco la implementacion del alumno, lo cual hace que tengan
-  un fuerte acomplamiento MAL, tengo que saber lo minimo e indispensable*/
+  esto hace que nico conozca la implementacion del alumno, lo cual hace que tengan
+  un fuerte acomplamiento (MAL), tengo que saber lo minimo e indispensable*/
 
   method leCaeBien(alumno) = alumno.estudia("fisica")
   //delego en el alumno como buscar la materia 
 
-
-  
 }
 
-/* lo importante de un objeto es su interfaz, los mensajes 
+/* lo mas importante de un objeto es su interfaz, osea los mensajes 
 (metodos) que puede utilizar con el*/
 
 object carlono {
@@ -61,7 +59,7 @@ object carlono {
   const precioQueNoCambia = 800 
   var precio = 300
 
-  //metodo con efecto (no retorna),las llaves son clave
+  //metodo con efecto (no retorna), las llaves son clave
   method precio(nuevoPrecio) {
     precio = nuevoPrecio
   }
@@ -69,14 +67,13 @@ object carlono {
   //metodo con retorno
   method cuantoCobras(materia) = precio 
 
-
   method leCaeBien(alumno) = true
 }
 
 object camila {
   var estaDeBuenHumor = true
 
-  //combiene expresarlo en 2 metodos diferentes
+  //combiene expresarlo en 2 metodos diferentes antes que en 1 solo con parametro
   method enojarse() {
 		estaDeBuenHumor = false
 	}
@@ -91,7 +88,7 @@ object camila {
   method cuantoCobras(materia) = if (estaDeBuenHumor) 250 else 750 
   /*si quisiera pasar como paramatro de una funcion un metodo conviene
   usar self.metodo()
-  camila no necesita el parametro materia pero lo ponemos para que
+  camila no necesita el parametro materia en "cuantocobras()" pero lo ponemos para que
   pueda entender el mismo msj q los otros profes, se beneficia lucas
   */
 
@@ -101,7 +98,7 @@ object camila {
 
 
 object lucas {
-  var plata = 400
+  var property plata = 400
   var profePreferido = nico
   const property materiasQueEstudia = [ "historia", "matematicas", "fisica" ]
 
@@ -126,14 +123,8 @@ object melanie {
   
 }
 
-/* Es IMPORTANTE saber que metodos va a necesitar melanie para funcionar para los
-objetos profes, en este caso solo estudia y estudiaMasDe
-*/
-
-
-
-
-
+/* Es IMPORTANTE saber que metodos va a necesitar melanie para funcionar con los metodos
+que tienen los objetos profes, en este caso solo estudia y estudiaMasDe */
 
 
 
@@ -160,7 +151,7 @@ carlono puede entrar cualquier cosa
 .size() = largo de una lista
 
 lista= [a,b,c]
-unset = #{}
+unset = #{}                           a diferencia de una lista no tiene repetidos ni tampoco orden
 
 
 
