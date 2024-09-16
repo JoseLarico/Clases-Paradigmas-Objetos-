@@ -37,7 +37,7 @@ Ahora aparece una alumna nueva: **Melanie**, qué necesitamos que sepa contestar
 object nico {
 
   method cuantoCobras(materia) = materia.length() * 50 
-  /* tiene un sist de inferencia de tipos donde
+  /* tiene un sist. de inferencia de tipos donde
   detecta que va a ser un parametro de tipo string
 
 
@@ -45,9 +45,10 @@ object nico {
 
   esto hace que nico conozca la implementacion del alumno, lo cual hace que tengan
   un fuerte acomplamiento (MAL), tengo que saber lo minimo e indispensable*/
-
-  method leCaeBien(alumno) = alumno.estudia("fisica")
+  
   //delego en el alumno como buscar la materia 
+  method leCaeBien(alumno) = alumno.estudia("fisica")
+  
 
 }
 
@@ -71,7 +72,7 @@ object carlono {
 }
 
 object camila {
-  var estaDeBuenHumor = true
+  var property estaDeBuenHumor = true
 
   //combiene expresarlo en 2 metodos diferentes antes que en 1 solo con parametro
   method enojarse() {
@@ -124,22 +125,22 @@ object melanie {
 }
 
 /* Es IMPORTANTE saber que metodos va a necesitar melanie para funcionar con los metodos
-que tienen los objetos profes, en este caso solo estudia y estudiaMasDe */
+que tienen los objetos profes, en este caso solo estudia() y estudiaMasDe() */
 
 
 
 
 /*CLAVE 
--poder definir objetos que entienden los mismos msjs significa que los objetos
-son polimorficos (concepto import. en objetos) capacidad de un objeto de mandar un
-msj a distintos objetos con distinta implementacion
+-Poder definir objetos que entienden los mismos msjs significa que los objetos son
+POLIMORFICOS (concepto import. en objetos) y es la capacidad de un objeto de mandar msjs
+a objetos con misma interfaz pero distinta implementacion 
 
--cuantoCobra solo espera recibir un string, esa es su interfaz
+-cuantoCobra() solo espera recibir un string, esa es su interfaz
 
--le cae bien para nico espera un tipo alumno por el msj q despues envia, pero para 
+-leCaeBien() para nico espera un tipo alumno por el msj q despues envia, pero para 
 carlono puede entrar cualquier cosa
 
-- el method look up es quien se encarga de buscar los metodos de un msj
+- el MethodLook up es quien se encarga de buscar los metodos de un msj
 */
 
 

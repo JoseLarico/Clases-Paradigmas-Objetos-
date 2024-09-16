@@ -1,0 +1,53 @@
+import clase1.*
+
+describe "Testeo de nico"{
+    test "test de cuanto cobra por materia " {
+        assert.equals(500, nico.cuantoCobras("paradigmas"))
+    }
+    test "test de alumno que cae bien" {
+        assert.that(nico.leCaeBien(lucas))
+    }
+    test "test de alumno que no le cae bien" {
+        //voy a utilizar un objeto anonimo para describir la situacion
+        const alumnoQueNoCaeBien = object {
+            method estudia(materia) = false
+        }
+        assert.notThat(nico.leCaeBien(alumnoQueNoCaeBien))
+    }
+}
+
+describe "testeo carlono"{
+    test "cuanto cobras carlono"{
+        assert.equals(300, carlono.cuantoCobras("pdp"))
+    }
+    test "test de alumno que le cae bien"{
+        assert.that(carlono.leCaeBien(lucas))
+    }
+}
+
+describe "testeo camila"{
+    //seteo el estado de camila antes de hacer el test para asegurarme que no haya 
+    //quedado en un estado basura que me joda los test
+    test "cuanto cobra camila si esta de buen humor"{
+        camila.estaDeBuenHumor(true)
+        assert.equals(250, camila.cuantoCobras("pdp"))
+    }
+
+    test "cuanto cobra camila si no esta de buen humor"{
+        camila.estaDeBuenHumor(false)
+        assert.equals(750, camila.cuantoCobras("pdp"))
+    }
+}
+
+describe "testeo lucas"{
+    test "esta feliz si le alcanza la plata para estudiar geografia"{
+        lucas.plata(350)
+        lucas.profePreferido(carlono)
+        assert.that(lucas.estaFeliz())
+    }
+    test "esta feliz si no le alcanza la plata para estudiar geografia"{
+        lucas.plata(350)
+        lucas.profePreferido(nico)
+        assert.notThat(lucas.estaFeliz())
+    }
+}
