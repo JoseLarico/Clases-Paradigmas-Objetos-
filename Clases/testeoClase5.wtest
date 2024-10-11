@@ -1,0 +1,101 @@
+import clase5.*
+
+describe "Test de Pepita - ciudades" {
+    //objetos que se usan en todos los tests
+    const campana = new Ciudad (consumo = 60)
+    const sanMartin = new Ciudad (consumo = 5)
+    
+    // todos los tests parten con pepita y sus 2 ciudades favs en ese orden
+    method initialize(){
+        pepita.agregarCiudad(campana)
+        pepita.agregarCiudad(sanMartin)
+    }
+
+
+    // Hay teste que prueban cosas diferentes a partir de la misma
+    // situacion por lo que una opcion es definir un metodo
+    method viajeLoco() {
+        //es conveniente definir quilmes en este scope ya que solo
+        //se utiliza aca, aparte de resultar mas descriptivo a la 
+        //de volver a releer el codigo
+
+        const quilmes = new Ciudad (consumo = 1)
+        pepita.cumplirDeseo()
+        pepita.agregarCiudad(quilmes)
+        pepita.cumplirDeseo()
+        pepita.cumplirDeseo() 
+    }
+  test "description" {
+    
+  }
+}
+
+//separo los test, en el primero utilizo initialize() y viajes loco
+//en el segundo como solo necesito validar energia no hace falta que lo otro afecte a
+//este describe
+describe "Test de Pepita - energia" {
+  test "description" {
+    //aca haria mis tests que tengan q ver con la energia
+  }
+}
+
+
+//Objetos que me ayudan a producir otros objetos especificos para test
+
+object personaFactory {
+    method personaDulce() = new Persona(plata=200)
+    method personaNoDulce() = new Persona(plata=100)
+    method personaDulceConComida() {
+        const persona = self.personaDulce()
+        persona.comprar(productosFactory.comida())
+        return persona
+    }
+    method personaDulceConTodo() {
+        const persona = self.personaDulceConComida()
+        persona.comprar(productosFactory.autoCaro())
+        return persona
+    }
+
+  
+}
+
+object productosFactory {
+    method autoCaro() = new Auto (precio = 200)
+    method comida() = new Comida (calorias = 25)
+  
+}
+
+describe "Test de personas -plata"{
+    test "tiene plata entonces esta dulce"{
+        assert.that(personaFactory.personaDulce().estaDulce())
+    }
+    test "persona que cobra sueldo aumenta un valor fijo"{
+        const persona = personaFactory.personaDulce()
+        persona.cobrarSueldo()
+        assert.equals(400, persona.plata())
+    }
+
+}
+
+describe "Test de personas - objetos comprados"{
+    test "cuando comprar cosas la plata gastada es la suma de los precios" {
+        assert.equals(250, personaFactory.personaDulceConTodo().llevoGastado())
+      
+    }
+}
+
+
+//TESTEO MONEDERO
+describe "Modenero Moment" {
+  test "quiero sacar mas plata de la que tengo y tirar error" {
+    assert.throwsExceptionWithMessage("Debe retirar menos de 100", { monedero.sacar(1000) })
+    
+  }
+  test "quiero sacar un monto negativo" {
+    assert.throwsExceptionLike(new UserException(message="La cantidad debe ser positiva"), { monedero.sacar(-20)})
+  }
+
+  test "quiero poner un monto negativo" {
+    assert.throwsExceptionWithMessage("La cantidad debe ser positiva", { monedero.poner(-20) })
+  } 
+}

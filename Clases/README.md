@@ -1,7 +1,8 @@
 
 
 ## Clase 1 DE OBJETOS WOLLOK
+C
 
-vamo lo pibe
+CLASE 5 Manejo de errores
 
 
