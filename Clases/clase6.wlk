@@ -1,6 +1,6 @@
 // CLASE 16-10
 
-//  TEMA- HERENCIA
+// --------------------------------------TEMA- HERENCIA---------------------------------------------
 //EJEMPLO DE AVES, GOLONDRINAS, PETRELES, TORCAZAS
 class Ave { //super clase
     var property energia =50
@@ -98,7 +98,7 @@ class Indiferente2{
 
 
 
-// TEMA - INMUTABILIDAD, IDENTIDAD
+// ------------------------------------------TEMA - INMUTABILIDAD, IDENTIDAD---------------------------------------
 class Point {
     const property x
     const property y
@@ -127,37 +127,37 @@ class Mail{
     const property emisor
     const property receptor
 
-    const invitacion11Oct= new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
-    const unMail= invitacion11Oct
-
-    //=== identidad  "apuntas al mismo objeto"
-    //== igualdad   "apuntan al mismo objeto"
-    //= asignacion   ""
-
-    const invitacion18Oct = new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
-    //diferente objeto que apunta hacia las mismas referencias que invitacion11Oct
-
-
-    /* 
-    > invitacion11Oct === unMail
-    true
-    > invitacion11Oct == unMail
-    true
-    > invitacion11Oct === invitacion18Oct
-    false
-    > invitacion11Oct == invitacion18Oct
-    false
-    */
-
     //no se puede redefinir el === pero si el ==
     override method == (otroMail)= asunto == otroMail.asunto() && emisor == otroMail.emisor() && receptor == otroMail.receptor()
-
-    /* 
-    > invitacion11Oct === invitacion18Oct
-    false
-    > invitacion11Oct == invitacion18Oct
-    true
-    */
-    
 }
 
+const invitacion11Oct= new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
+const unMail= invitacion11Oct
+//Hago una referencia unMail al mismo objeto invitacion11Oct, lo que cambie en unMail tendra efecto en el estado de invitacion11Oct
+
+
+//=== identidad  "apuntas al mismo objeto"
+//== igualdad   "apuntan al mismo objeto"
+//= asignacion   ""
+
+const invitacion18Oct = new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
+//diferente objeto que apunta hacia las mismas referencias que invitacion11Oct, el efecto en invitacion18Oct no afectara a invitacion11Oct
+
+/* 
+1) Antes de redefinir ==
+> invitacion11Oct === unMail
+true
+> invitacion11Oct == unMail
+true
+> invitacion11Oct === invitacion18Oct
+false
+> invitacion11Oct == invitacion18Oct
+false
+
+
+2) Despues de Redefinir == ahora las preguntas devuelven 
+> invitacion11Oct === invitacion18Oct
+false
+> invitacion11Oct == invitacion18Oct
+true
+*/
