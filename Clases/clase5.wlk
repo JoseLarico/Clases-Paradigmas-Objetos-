@@ -124,6 +124,4 @@ class Comida {
 class Auto {
     const property precio
 
-    
 }
-
