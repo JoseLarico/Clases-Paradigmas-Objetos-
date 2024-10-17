@@ -1,5 +1,6 @@
 // CLASE 16-10
 
+//  TEMA- HERENCIA
 //EJEMPLO DE AVES, GOLONDRINAS, PETRELES, TORCAZAS
 class Ave { //super clase
     var property energia =50
@@ -97,7 +98,7 @@ class Indiferente2{
 
 
 
-// INMUTABILIDAD, IDENTIDAD
+// TEMA - INMUTABILIDAD, IDENTIDAD
 class Point {
     const property x
     const property y
@@ -113,12 +114,12 @@ class Point {
 //pero las dagas por ejemplo como objeto no esta bueno que se repita la flecha hacia 2 dagas y se modifiquen 
 //conjuntamente
 
-class Persona{
+class Persona3{
     var property nombre
 }
 
-const pedro=new Persona(nombre="pedro")
-const pelusa=new Persona(nombre="pelusa")
+const pedro=new Persona3(nombre="pedro")
+const pelusa=new Persona3(nombre="pelusa")
 const amiwi = pelusa
 
 class Mail{
@@ -129,16 +130,34 @@ class Mail{
     const invitacion11Oct= new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
     const unMail= invitacion11Oct
 
-    === identidad  "apuntas al mismo objeto"
-    == igualdad   "apuntan al mismo objeto"
-    = asignacion   ""
+    //=== identidad  "apuntas al mismo objeto"
+    //== igualdad   "apuntan al mismo objeto"
+    //= asignacion   ""
 
-    const invitacion18Oct= new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
-    //diferente objeto que apunta hacia las mismas referencias que el otro mail
+    const invitacion18Oct = new Mail(asunto="asado?",emisor="jc@gmail.com",receptor="fd@gmail.com")
+    //diferente objeto que apunta hacia las mismas referencias que invitacion11Oct
+
+
+    /* 
+    > invitacion11Oct === unMail
+    true
+    > invitacion11Oct == unMail
+    true
+    > invitacion11Oct === invitacion18Oct
+    false
+    > invitacion11Oct == invitacion18Oct
+    false
+    */
 
     //no se puede redefinir el === pero si el ==
-
     override method == (otroMail)= asunto == otroMail.asunto() && emisor == otroMail.emisor() && receptor == otroMail.receptor()
+
+    /* 
+    > invitacion11Oct === invitacion18Oct
+    false
+    > invitacion11Oct == invitacion18Oct
+    true
+    */
     
 }
 
