@@ -26,6 +26,7 @@ describe "Test de Pepita - ciudades" {
         pepita.cumplirDeseo() 
     }
   test "description" {
+    assert.equals(10, 2*5)
     
   }
 }

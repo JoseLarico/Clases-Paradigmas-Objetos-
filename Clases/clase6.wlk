@@ -160,7 +160,7 @@ false
 false
 > invitacion11Oct == invitacion18Oct
 true
-*/^
+*/
 
 //Comentar un cacho de codigo ctrl k+c
 //Descomentar un cacho de codigo ctrol k+u

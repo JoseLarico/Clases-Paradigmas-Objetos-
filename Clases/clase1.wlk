@@ -57,7 +57,7 @@ object nico {
 
 object carlono {
   //referencias
-  const precioQueNoCambia = 800 
+  // const precioQueNoCambia = 800 
   var precio = 300
 
   //metodo con efecto (no retorna), las llaves son clave
