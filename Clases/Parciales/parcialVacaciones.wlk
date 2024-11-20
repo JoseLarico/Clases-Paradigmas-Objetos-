@@ -5,7 +5,7 @@ class Lugar{
     const property nombre
 
     method esDivertido() = self.nombreEsPar() and self.condicionParticular()
-    method nombreEsPar() = nombre.even()
+    method nombreEsPar() = nombre.size().even()
     method condicionParticular()  
 
     method esTranquilo()
@@ -13,7 +13,7 @@ class Lugar{
     method esRaro() = nombre.size() > 10  
 }
 
-class Ciudades inherits Lugar {
+class Ciudad inherits Lugar {
     var property cantHabitantes 
     var property decibelesPromedio  
     const property atracciones = [] 
@@ -26,7 +26,7 @@ class Ciudades inherits Lugar {
 
 }
 
-class Pueblos inherits Lugar {
+class Pueblo inherits Lugar {
     const property extension
     const property anioFundacion
     const property provincia
@@ -79,6 +79,17 @@ class Persona{
 
     method aceptaVacaciones(lugar) = preferencia.cumpleCondiciones(lugar)
 }
+
+const ciudadDivertida = new Ciudad(nombre="lugano", cantHabitantes= 100, decibelesPromedio = 10,atracciones = ["rueda","mazo", "turbo","ania"])
+const puebloDivertido = new Pueblo(nombre="jelo",extension= "100", anioFundacion= 2000,provincia="LaPampa")
+
+const preferenciaCombinada = new Combinado(criterios=[divertido,raro,tranquilo])
+
+const personaDivertida = new Persona(preferencia=divertido, precioMaximo=200)
+const personaTranquila = new Persona(preferencia=tranquilo, precioMaximo=200)
+const personaCombinada = new Persona(preferencia=preferenciaCombinada, precioMaximo=200)
+
+
 
 //PUNTO 3
 
