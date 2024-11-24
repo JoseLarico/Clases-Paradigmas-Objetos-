@@ -115,7 +115,7 @@ object moni inherits Persona(posicion=1,criterio=posta,preferenciaDeComida=alter
 }
 object facu inherits Persona(posicion=1,criterio=posta,preferenciaDeComida=alternado){
 
-    override method condicionParticular()= comidasIngeridadas.any({comida=>comida.tieneCarne()})
+    override method condicionParticular()= comidasIngeridas.any({comida=>comida.tieneCarne()})
 
 }
 object vero inherits Persona(posicion=4,criterio=posta,preferenciaDeComida=alternado){
