@@ -5,12 +5,13 @@ class Lugar{
     const property nombre
 
     method esDivertido() = self.nombreEsPar() and self.condicionParticular()
-    method nombreEsPar() = nombre.size().even()
+    method nombreEsPar() = self.cantidadDeLetras().even()    // solo se usa una vez, no hace falta delegar la cantidad de letras en otro metodo
     method condicionParticular()  
 
     method esTranquilo()
 
-    method esRaro() = nombre.size() > 10  
+    method esRaro() = self.cantidadDeLetras() > 10  
+    method cantidadDeLetras()= nombre.size()
 }
 
 class Ciudad inherits Lugar {
@@ -18,7 +19,7 @@ class Ciudad inherits Lugar {
     var property decibelesPromedio  
     const property atracciones = [] 
 
-    override method condicionParticular() = self.muchasAtracciones() and self.esPoblada()
+    override method condicionParticular() = self.muchasAtracciones() and self.esPoblada() 
     method muchasAtracciones() = atracciones.size() > 3
     method esPoblada() = cantHabitantes > 100
 
@@ -49,11 +50,12 @@ class Balneario inherits Lugar{
     override method condicionParticular() = self.esGrande() and marPeligroso
     method esGrande() = metrosPlaya > 300 
 
-    override method esTranquilo() = tienePeatonal
+    override method esTranquilo() = !tienePeatonal
 }
 
 
 //PUNTO 2
+//strategy
 object divertido {
     method cumpleCondiciones(lugar) = lugar.esDivertido() 
   
@@ -73,11 +75,13 @@ class Combinado{
     method cumpleCondiciones(lugar) = criterios.any({criterio => criterio.cumpleCondiciones(lugar)})      
 }
 
+// contexto: es el que usa a los strategys (en este caso Persona)
 class Persona{
     var property preferencia 
     const property precioMaximo  
 
     method aceptaVacaciones(lugar) = preferencia.cumpleCondiciones(lugar)
+    method aceptaPrecio(monto) = precioMaximo <= monto
 }
 
 const ciudadDivertida = new Ciudad(nombre="lugano", cantHabitantes= 100, decibelesPromedio = 10,atracciones = ["rueda","mazo", "turbo","ania"])
@@ -101,30 +105,50 @@ class Tour{
     const property personasAnotadas = [] 
 
     method agregarPersona(persona){
-        if(self.aceptaPrecio(persona) and self.aceptaLugares(persona) and self.hayLugar()){        //precioAdecuado() and lugaresAdecuados()
-            personasAnotadas.add(persona)
+        if(!(persona.aceptaPrecio(persona))){
+            throw new DomainException (message="El monto supera el precio maximo que puede pagar, que es " + persona.precioMaximo())
         }
+        if(!(self.aceptaLugares(persona))){
+            throw new DomainException(message = "Hay una ciudad que ustede no aceptaria")
+        }
+        if(!(self.hayLugar())){
+            throw new DomainException(message = "No hay mas cupos dispoonibles en el tour")
+        }
+        
+        personasAnotadas.add(persona)
+        
         //excepcion?? me detiene el programa, no podria dar de baja personas para agregar nuevas
+
     } 
     method hayLugar() = personasAnotadas.size() < personasRequeridas
-    method aceptaPrecio(persona) = persona.precioMaximo() <= precioTour
     method aceptaLugares(persona) = ciudades.all({ciudad => persona.aceptaVacaciones(ciudad)})
-
     method darDeBaja(persona) = personasAnotadas.remove(persona)
 
     method montoPorTour() = self.personasAnotadas().size() * self.precioTour()
+    method esAnioActual() = fechaDeSalida.year() == new Date().year()
 }
 
 //PUNTO 4
 
 class Reporte {
+    //objeto pq quiero tener el universo completo de todos los tours para generar el reporte
     const property listaDeTours = []
-    const property anioActual  
+    //const property anioActual   tiene que ser un metodo
 
     method toursPendientes() = listaDeTours.filter({tour => tour.hayLugar()})
 
     method montoTotalPorAnio() = self.toursDelAnio().sum({tour => tour.montoPorTour() })
-    method toursDelAnio() = listaDeTours.filter({tour => tour.fechaDeSalida().year() == anioActual})
+    method toursDelAnio() = listaDeTours.filter({tour => tour.esAnioActual()})
+
+    method anioActual() = new Date().year()
+
+    
 
 
 }
+
+//poca cohesion muchas responsabilidades
+//mucha cohesion pocas responsabilidades
+
+//solo hay super clase cuando hay comportamiento comun, sino o hay y armo una super clase
+//con metodo abstracto lo unico que hago es hcaer una interfaz
