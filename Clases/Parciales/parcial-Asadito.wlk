@@ -1,21 +1,28 @@
 class Persona {
     var property posicion
     const property elementosCerca = []
-    var property criterio      // para pasar los elementos pedidos
-    var property preferenciaDeComida
-    const property comidasIngeridas = [] 
+    var property criterioParaPasar      // para pasar los elementos pedidos
+    var property criterioParaComer = alternado
+    const property comidasIngeridas = []  
 
-    method primerElemento() = elementosCerca.first() 
-
-    method agregarElemento(nuevoElemento) {
+    method agregarElemento(nuevoElemento) {        //necesario?
       elementosCerca.add(nuevoElemento)
     }
-    method removerElemento(elemento) {
+    method removerElemento(elemento) {             //necesario?
         elementosCerca.remove(elemento)
       
     }
 
-    method quiereComer(plato) = preferenciaDeComida.puedeComer(plato) // falta ingerir las comidas que si acepta
+    method tieneElElemento(elemento) = elementosCerca.contains(elemento)
+
+    method pedirElemento(elemento, invitado){
+        if(!self.tieneElElemento(elemento)){
+            throw new DomainException (message="La persona no tiene el elemento para poder pasarlo")
+        }
+        invitado.criterioParaPasar().pasame(elemento,self,invitado)
+
+    }
+    method quiereComer(plato) = criterioParaComer.puedeComer(plato)     // falta ingerir las comidas que si acepta
     method estaPipon() = comidasIngeridas.any({comida => comida.esPesada()})
 
     method ingerir(plato){
@@ -24,6 +31,8 @@ class Persona {
         }
         comidasIngeridas.add(plato)
     }
+
+    method primerElemento() = elementosCerca.first()
 
     method laPasoBien() = self.comioAlgo() and self.condicionParticular()
     method condicionParticular()
@@ -46,6 +55,7 @@ object impaciente {
 }
 object cambioLugar{
     var property lugarProvisional = null
+
     method pasame(elemento,persona,invitado) {
         lugarProvisional = persona.posicion()
         persona.posicion(invitado.posicion())
@@ -68,7 +78,7 @@ class Bandeja{
     method esPesada() = calorias > 500
 }
 
-const ligero = new Bandeja(calorias = 300, tieneCarne=true)  //ejemplo
+// const ligero = new Bandeja(calorias = 300, tieneCarne=true)  //ejemplo
 
 object vegetariano{
     method puedeComer(plato) = !(plato.tieneCarne())
@@ -103,22 +113,22 @@ class Combinado{
 
 
 //PUNTO 4
-object osky inherits Persona(posicion=1,criterio=posta,preferenciaDeComida=alternado){
+object osky inherits Persona(posicion=1,criterioParaPasar=posta){
 
     override method condicionParticular()= true
 
 }
-object moni inherits Persona(posicion=1,criterio=posta,preferenciaDeComida=alternado){
+object moni inherits Persona(posicion=1,criterioParaPasar=posta){
 
     override method condicionParticular()= posicion == 11
 
 }
-object facu inherits Persona(posicion=1,criterio=posta,preferenciaDeComida=alternado){
+object facu inherits Persona(posicion=1,criterioParaPasar=posta){
 
     override method condicionParticular()= comidasIngeridas.any({comida=>comida.tieneCarne()})
 
 }
-object vero inherits Persona(posicion=4,criterio=posta,preferenciaDeComida=alternado){
+object vero inherits Persona(posicion=4,criterioParaPasar=posta){
 
     override method condicionParticular()= elementosCerca.size() <= 3
 }
